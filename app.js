@@ -25,7 +25,9 @@ app.set("view engine", "handlebars");
 app.set("views", path.join(__dirname, "views"));
 
 //middleware
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
 app.use(
   expressSession({
     secret: SECRET_VALUE,
@@ -39,6 +41,7 @@ app.use(
     },
   })
 );
+
 
 //static files
 app.use(express.static(path.join(__dirname, "public")));
@@ -63,8 +66,7 @@ app.use("/error", errorPage);
 
 //next
 app.use("/", (req, res, next) => {
-    console.log("calisyti page");
-    next();
+res.render('site/error')
   });
 app.listen(PORT, () => {
   console.log(`server is running ${API_URL}`);

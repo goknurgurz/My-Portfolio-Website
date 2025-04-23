@@ -1,8 +1,12 @@
 const express = require('express');
-const router = express.Router()
+const router = express.Router();
 
+// GET: register page
 router.get("/", (req, res) => {
-    res.render("site/register");
-  });
+  res.render("site/register");
+});
 
-  module.exports = router;
+router.post("/", (req, res) => {
+  console.log(req.body);
+ })
+module.exports = router;
