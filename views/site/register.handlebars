@@ -67,6 +67,7 @@
       if (res.case) {
         register.reset(); // Formu temizle
         alert(res.message); // Kullanıcıya bilgi mesajı göster
+         window.location.href = "/"; // Kullanıcıyı login sayfasına yönlendir
       } else {
         alert(res.message); // Hata mesajı göster
       }
