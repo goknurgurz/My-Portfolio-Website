@@ -2,26 +2,66 @@
 
 
    <div class="logReg">
-      <img src="/img/background/login.jpg" alt="register">
-      <form>
+      <img src="/img/background/login.jpg" alt="login">
+      <form id="login">
 
          <div class="formGroup">
-            <input type="text" required>
+            <input name="username" required>
             <span>Username *</span>
          </div>
 
          <div class="formGroup">
-            <input type="text" required>
+            <input name="password" required>
             <span>Password *</span>
          </div>
 
          <div class="btnGroup">
-            <a href="/register">Don't you have an account?</a>
+            <a href="/login">Don't you have an account?</a>
             <button>Login</button>
          </div>
       </form>
    </div>
 
 
+<script>
+  // login formunu DOM'dan alıyoruz
+  const login = document.getElementById('login');
+
+  // Form gönderildiğinde tetiklenecek olan event
+  login.addEventListener('submit', (e) => {
+    e.preventDefault(); // Sayfanın yenilenmesini engeller
+
+    // Form verilerini alır ve URL formatına çevirir (x-www-form-urlencoded için)
+    const formData = new URLSearchParams(new FormData(e.target));
+
+    // Form verilerini sunucuya POST ile gönderiyoruz
+    fetch("/login", {
+      method: 'POST', // POST methoduyla veri gönderimi
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded' // Sunucu bu formatı bekliyor
+      },
+      body: formData // Gönderilecek veri (email, username, password)
+    })
+    .then(response => {
+      return response.json(); // JSON formatında cevap alıyoruz
+    })
+    .then(res => {
+      console.log(res); // Sunucudan gelen cevabı konsola yaz
+
+      // Eğer işlem başarılıysa (sunucu 'case: true' gönderirse)
+      if (res.case) {
+        login.reset(); // Formu temizle
+        alert(res.message); // Kullanıcıya bilgi mesajı göster
+         window.location.href = "/"; // Kullanıcıyı login sayfasına yönlendir
+      } else {
+        alert(res.message); // Hata mesajı göster
+      }
+    })
+    .catch(err => {
+      console.error("Bir hata oluştu:", err); // Fetch sırasında oluşan hatayı yakala
+      alert("Bir hata oluştu. Lütfen tekrar deneyin.");
+    });
+  });
+</script>
 
 

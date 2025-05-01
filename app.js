@@ -58,6 +58,7 @@ const errorPage = require(path.join(__dirname, "router", "errorPage.js"));
 //user giris kontrolu
 app.use("/", (req, res, next) => {
   const {userID} = req.session;
+  req.session.UserID ='680fd77476c3f5a3b5fe505f'
   if (userID) {
     res.locals.user = true;
   } else {
